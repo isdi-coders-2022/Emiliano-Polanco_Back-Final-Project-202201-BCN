@@ -8,7 +8,6 @@ const UserSchema = new Schema({
 
   lastName: String,
   email: String,
-  birthDate: String,
   username: {
     type: String,
     required: true,
@@ -17,12 +16,6 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  connections: [
-    {
-      userId: String,
-      relation: String,
-    },
-  ],
 });
 
 const User = model("User", UserSchema, "Users");
