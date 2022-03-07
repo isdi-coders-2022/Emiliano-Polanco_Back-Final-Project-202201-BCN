@@ -6,4 +6,4 @@ coverage
 .ideas
 src/server/controllers
 src/server/routers
-src/server/middlewares
+
