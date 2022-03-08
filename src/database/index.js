@@ -3,7 +3,7 @@ const debug = require("debug")("typing-app:database");
 
 const connectDataBase = (connectionLogin) =>
   new Promise((resolve, reject) => {
-    mongoose.set("debug", true);
+    mongoose.set("debug", false);
     mongoose.connect(connectionLogin, (error) => {
       if (error) {
         reject(error);

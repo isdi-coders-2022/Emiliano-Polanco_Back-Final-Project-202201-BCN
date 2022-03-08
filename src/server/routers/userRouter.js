@@ -1,10 +1,12 @@
-const generalRouter = require("express").Router();
+const userRouter = require("express").Router();
+const validator = require("express-joi-validation").createValidator({});
 const {
   loginController,
   registerController,
 } = require("../controllers/user/credentialsControllers");
+const joiUser = require("../middlewares/joySchemas/joyUserSchema");
 
-generalRouter.post("", loginController);
-generalRouter.post("/register", registerController);
+userRouter.post("/login", loginController);
+userRouter.post("/register", validator.query(joiUser), registerController);
 
-module.exports = generalRouter;
+module.exports = userRouter;
