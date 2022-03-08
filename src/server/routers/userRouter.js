@@ -1,5 +1,5 @@
 const userRouter = require("express").Router();
-const validator = require("express-joi-validation").createValidator({});
+const { validate } = require("express-validation");
 const {
   loginController,
   registerController,
@@ -7,6 +7,6 @@ const {
 const joiUser = require("../middlewares/joySchemas/joyUserSchema");
 
 userRouter.post("/login", loginController);
-userRouter.post("/register", validator.query(joiUser), registerController);
+userRouter.post("/register", validate(joiUser), registerController);
 
 module.exports = userRouter;
