@@ -18,9 +18,7 @@ const loginController = async (req, res, next) => {
     if (passwordMatch) {
       const payloadUser = {
         name: userFounded.name,
-        lastName: userFounded.lastName,
-        email: userFounded.email,
-        birthDate: userFounded.birthDate,
+        lastname: userFounded.lastName,
         username: userFounded.username,
         // eslint-disable-next-line no-underscore-dangle
         _id: userFounded._id,
@@ -36,44 +34,39 @@ const loginController = async (req, res, next) => {
 };
 
 const registerController = async (req, res, next) => {
-  const { name, username, password, lastName, email, birthDate } = req.body;
-  if (!name || !username || !password) {
-    const error = new Error("You must have a name, username and password");
+  const { name, username, password, lastname, email } = req.body;
+  const repitedUser = await User.findOne({ username });
+  const repitedEmail = await User.findOne({ email });
+
+  if (repitedEmail) {
+    const error = new Error("The email it's already in use");
+    error.status = 400;
+    next(error);
+  } else if (repitedUser) {
+    const error = new Error("The username isn't avaliable");
     error.status = 400;
     next(error);
   } else {
-    const repitedUser = await User.findOne({ username });
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = {
+      name,
+      lastname,
+      username,
+      email,
+      password: hashedPassword,
+    };
 
-    if (repitedUser) {
-      const error = new Error("The username isn't avaliable");
-      error.status = 400;
-      next(error);
-    } else {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = {
-        name,
-        lastName,
-        username,
-        email,
-        birthDate,
-        password: hashedPassword,
-        connections: [],
-      };
+    const createdUser = await User.create(newUser);
+    const payloadUser = {
+      name: createdUser.name,
+      lastname: createdUser.lastname,
+      username: createdUser.username,
+      // eslint-disable-next-line no-underscore-dangle
+      _id: createdUser._id,
+    };
 
-      const createdUser = await User.create(newUser);
-      const payloadUser = {
-        name: createdUser.name,
-        lastName: createdUser.lastName,
-        email: createdUser.email,
-        birthDate: createdUser.birthDate,
-        username: createdUser.username,
-        // eslint-disable-next-line no-underscore-dangle
-        _id: createdUser._id,
-      };
-
-      const token = await jwt.sign(payloadUser, secret);
-      res.json({ token });
-    }
+    const token = await jwt.sign(payloadUser, secret);
+    res.json({ token });
   }
 };
 module.exports = { loginController, registerController };

@@ -5,6 +5,7 @@ const { default: helmet } = require("helmet");
 const morgan = require("morgan");
 const { notFoundError, internalServerError } = require("./middlewares/errors");
 const snippetRouter = require("./routers/snippetRouter");
+const userRouter = require("./routers/userRouter");
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(morgan("dev"));
 app.use(helmet());
 app.use(express.json());
 app.use("/snippets", snippetRouter);
+app.use("/users", userRouter);
 
 app.use(notFoundError);
 app.use(internalServerError);

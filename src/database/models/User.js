@@ -6,7 +6,7 @@ const UserSchema = new Schema({
     required: true,
   },
 
-  lastName: {
+  lastname: {
     type: String,
     required: true,
   },
@@ -32,18 +32,19 @@ const UserSchema = new Schema({
     type: String,
     default: "basic",
   },
-  scoreHistoryWpm: [Number],
-  scoreHistoryAccuracy: [Number],
+  scoreHistoryWpm: [{ type: Number, default: [] }],
+  scoreHistoryAccuracy: [{ Number, default: [] }],
   scoreHistoryPerCharacter: [
     {
       letter: String,
       missed: Number,
+      default: [],
     },
   ],
-  snippetsJavaScript: [Schema.Types.ObjectId],
-  snippetsPhyton: [Schema.Types.ObjectId],
-  snippetsTyeScript: [Schema.Types.ObjectId],
-  snippetsCsharp: [Schema.Types.ObjectId],
+  snippetsJavaScript: [{ type: Schema.Types.ObjectId, default: [] }],
+  snippetsPhyton: [{ type: Schema.Types.ObjectId, default: [] }],
+  snippetsTyeScript: [{ type: Schema.Types.ObjectId, default: [] }],
+  snippetsCsharp: [{ type: Schema.Types.ObjectId, default: [] }],
 });
 
 const User = model("User", UserSchema, "Users");
