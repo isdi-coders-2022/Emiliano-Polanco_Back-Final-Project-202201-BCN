@@ -27,7 +27,6 @@ afterAll(async () => {
   await mongoServer.stop();
 });
 
-jest.setTimeout(2000);
 describe("Given a snippets/javascript endpoint", () => {
   describe("When it receives a get petition", () => {
     test("Then it should reply with a random javaScript object", async () => {
