@@ -4,6 +4,4 @@ node_modules
 coverage
 .scannerwork
 .ideas
-src/server/controllers
-src/server/routers
 

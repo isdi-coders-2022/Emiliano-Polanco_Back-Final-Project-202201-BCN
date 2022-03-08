@@ -4,7 +4,7 @@ const SnippetSchema = require("./SnippetSchema");
 const SnippetTypeSript = model(
   "SnippetTypeScript",
   SnippetSchema,
-  "SnippetsJavaScript"
+  "SnippetsTypeScript"
 );
 
 module.exports = SnippetTypeSript;
