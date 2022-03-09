@@ -41,9 +41,13 @@ const UserSchema = new Schema({
       default: [],
     },
   ],
-  snippetsJavaScript: [{ type: Schema.Types.ObjectId, default: [] }],
+  snippetsJavaScript: [
+    { type: Schema.Types.ObjectId, default: [], ref: "SnippetJavaScript" },
+  ],
   snippetsPhyton: [{ type: Schema.Types.ObjectId, default: [] }],
-  snippetsTyeScript: [{ type: Schema.Types.ObjectId, default: [] }],
+  snippetsTypeScript: [
+    { type: Schema.Types.ObjectId, default: [], ref: "SnippetTypeScript" },
+  ],
   snippetsCsharp: [{ type: Schema.Types.ObjectId, default: [] }],
 });
 

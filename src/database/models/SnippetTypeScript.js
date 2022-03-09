@@ -1,10 +1,10 @@
 const { model } = require("mongoose");
 const SnippetSchema = require("./SnippetSchema");
 
-const SnippetTypeSript = model(
+const SnippetTypeScript = model(
   "SnippetTypeScript",
   SnippetSchema,
   "SnippetsTypeScript"
 );
 
-module.exports = SnippetTypeSript;
+module.exports = SnippetTypeScript;
