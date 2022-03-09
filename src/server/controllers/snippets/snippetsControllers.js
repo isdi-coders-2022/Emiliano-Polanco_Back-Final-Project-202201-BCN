@@ -17,7 +17,7 @@ const createSnippetController =
       res.status(201).json(snippetCreation);
     } catch (error) {
       error.status = 400;
-      error.message = "You did a bad request, JavaScript snippet not created";
+      error.message = "You did a bad request, snippet not created";
       next(error);
     }
   };

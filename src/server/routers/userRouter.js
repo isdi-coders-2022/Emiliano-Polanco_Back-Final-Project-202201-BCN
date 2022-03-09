@@ -1,12 +1,8 @@
 const userRouter = require("express").Router();
-const { validate } = require("express-validation");
 const {
-  loginController,
-  registerController,
-} = require("../controllers/user/credentialsControllers");
-const joiUser = require("../middlewares/joySchemas/joyUserSchema");
+  collectionUserSnippetsController,
+} = require("../controllers/user/collectionsControllers");
 
-userRouter.post("/login", loginController);
-userRouter.post("/register", validate(joiUser), registerController);
+userRouter.get("/snippets", collectionUserSnippetsController);
 
 module.exports = userRouter;

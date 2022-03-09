@@ -8,7 +8,7 @@
     "start-dev": "nodemon src/index.js -q",
     "test": "jest",
     "test-watch": "jest --watchAll",
-    "test-coverage": "jest --watchAll --collect-coverage",
+    "test-coverage": "jest --collect-coverage",
     "prepare": "husky install"
   },
   "keywords": [],
