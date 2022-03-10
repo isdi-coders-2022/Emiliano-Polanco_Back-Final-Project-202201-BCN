@@ -66,18 +66,41 @@ const editSnippetController =
     }
   };
 
-const deleteSnippetFromUserCollection = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    const updatedUser = await User.findByIdAndUpdate(id, req.body, {
-      new: true,
-    });
-    res.status(200).json(updatedUser);
-  } catch (error) {
-    error.status = 404;
-    next(error);
-  }
-};
+const deleteSnippetFromUserCollection =
+  (programingLanguageModel) => async (req, res, next) => {
+    try {
+      const { snippetId } = req.body;
+      let updatedUser;
+      switch (programingLanguageModel.modelName) {
+        case "SnippetJavaScript":
+          updatedUser = await User.findByIdAndUpdate(
+            req.userId,
+            { $pull: { snippetsJavaScript: snippetId } },
+            {
+              new: true,
+            }
+          );
+          break;
+        case "SnippetTypeScript":
+          updatedUser = await User.findByIdAndUpdate(
+            req.userId,
+            { $pull: { snippetsTypeScript: snippetId } },
+            {
+              new: true,
+            }
+          );
+          break;
+        default:
+          updatedUser = {
+            message: "Holy moly we didn't found the user",
+          };
+      }
+      res.status(200).json(updatedUser);
+    } catch (error) {
+      error.status = 404;
+      next(error);
+    }
+  };
 
 module.exports = {
   loadRandomSnippetController,
