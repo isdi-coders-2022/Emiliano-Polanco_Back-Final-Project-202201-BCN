@@ -2,7 +2,7 @@ const { MongoMemoryServer } = require("mongodb-memory-server");
 const { default: mongoose } = require("mongoose");
 const request = require("supertest");
 const connectDataBase = require("../../../database");
-const SnippetJavaScript = require("../../../database/models/SnippetJavaScript");
+const SnippetTypeScript = require("../../../database/models/SnippetTypeScript");
 const User = require("../../../database/models/User");
 const app = require("../../index");
 
@@ -18,12 +18,12 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  SnippetJavaScript.create({
-    language: "JavaScript",
+  SnippetTypeScript.create({
+    language: "TypeScript",
     textCode: "hi hi i am a program",
     title: "amazingsoftware",
   });
-  const { body: snippetBoddy } = await request(app).get("/javascript");
+  const { body: snippetBoddy } = await request(app).get("/typescript");
   // eslint-disable-next-line no-underscore-dangle
   idSnippetCreated = snippetBoddy._id;
   User.create({
@@ -32,7 +32,7 @@ beforeEach(async () => {
     username: "emilio",
     email: "emilianopolanco5@gmail.com",
     password: "$2b$10$wu1A2PgtaMPps7h01duPeeJN3wicJ.PjOhzwdWqFagwAn3MhxW9oq",
-    snippetsJavaScript: [idSnippetCreated],
+    snippetsTypeScript: [idSnippetCreated],
   });
 
   const rightCredentials = {
@@ -54,36 +54,36 @@ afterAll(async () => {
   await mongoServer.stop();
 });
 
-describe("Given a /javascript endpoint", () => {
+describe("Given a /typescript endpoint", () => {
   describe("When it receives a get petition", () => {
-    test("Then it should reply with a random javaScript object", async () => {
-      const { body } = await request(app).get("/javascript");
+    test("Then it should reply with a random typescript object", async () => {
+      const { body } = await request(app).get("/typescript");
 
-      expect(body).toHaveProperty("language");
+      expect(body.language).toBe("TypeScript");
     });
   });
 });
 
-describe("Given a /javascript/create", () => {
+describe("Given a /typescript/create", () => {
   describe("When it receives a post petition with a code snipped", () => {
-    test("Then it should asnwer with the new user state", async () => {
+    test("Then it should asnwer with the new User state", async () => {
       const codesnippet = {
-        language: "JavaScript",
+        language: "TypeScript",
         textCode: `const startServer = (app, port) =>\r\n  new Promise((resolve, reject) => {\r\n    const server = app.listen(port, () => {\r\n      debugs up in http://localhost:$");\r\n      resolve();\r\n    });\r\n\r\n    server.on("error", (error) => {\r\n      debug("Oh no the server couldnt start"`,
         title: "snippet express",
       };
       const { body } = await request(app)
-        .post("/javascript/create")
+        .post("/typescript/create")
         .set("Authorization", `Bearer ${token}`)
         .send(codesnippet)
         .expect(201);
 
-      expect(body.snippetsJavaScript).toHaveLength(2);
+      expect(body.snippetsTypeScript).toHaveLength(2);
     });
   });
 });
 
-describe("Given a /javascript/edit endpoint", () => {
+describe("Given a /typescript/edit endpoint", () => {
   describe("When it receives a patch petition with an edition object", () => {
     test("Then it should reply with the userState", async () => {
       const editionObject = {
@@ -91,7 +91,7 @@ describe("Given a /javascript/edit endpoint", () => {
         updatedProperty: { title: "i am a new title" },
       };
       const { body } = await request(app)
-        .patch("/javascript/edit")
+        .patch("/typescript/edit")
         .set("Authorization", `Bearer ${token}`)
         .send(editionObject);
 
@@ -107,11 +107,11 @@ describe("Given a /javascript/delete endpoint", () => {
         snippetId: idSnippetCreated,
       };
       const { body } = await request(app)
-        .delete("/javascript/delete")
+        .delete("/typescript/delete")
         .set("Authorization", `Bearer ${token}`)
         .send(deleteObject);
 
-      expect(body.snippetsJavaScript).toHaveLength(0);
+      expect(body.snippetsTypeScript).toHaveLength(0);
     });
   });
 });

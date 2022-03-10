@@ -5,6 +5,7 @@ const {
   loadRandomSnippetController,
   createSnippetController,
   editSnippetController,
+  deleteSnippetFromUserCollection,
 } = require("../../controllers/snippets/snippetsControllers");
 const joiSnippet = require("../../middlewares/joySchemas/joySnippetSchema");
 const snippetLanguageValidator = require("../../middlewares/snippetLanguageValidator");
@@ -22,6 +23,11 @@ javaScriptRouter.patch(
   "/edit",
   tokenValidator,
   editSnippetController(SnippetJavaScript)
+);
+javaScriptRouter.delete(
+  "/delete",
+  tokenValidator,
+  deleteSnippetFromUserCollection(SnippetJavaScript)
 );
 
 module.exports = javaScriptRouter;

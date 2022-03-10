@@ -6,6 +6,7 @@ const {
   loadRandomSnippetController,
   createSnippetController,
   editSnippetController,
+  deleteSnippetFromUserCollection,
 } = require("../../controllers/snippets/snippetsControllers");
 const joiSnippet = require("../../middlewares/joySchemas/joySnippetSchema");
 const snippetLanguageValidator = require("../../middlewares/snippetLanguageValidator");
@@ -24,5 +25,9 @@ typeScriptRouter.patch(
   tokenValidator,
   editSnippetController(SnippetTypeScript)
 );
-
+typeScriptRouter.delete(
+  "/delete",
+  tokenValidator,
+  deleteSnippetFromUserCollection(SnippetTypeScript)
+);
 module.exports = typeScriptRouter;
