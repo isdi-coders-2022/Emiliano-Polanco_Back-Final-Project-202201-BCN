@@ -3,9 +3,12 @@ const { default: mongoose } = require("mongoose");
 const request = require("supertest");
 const connectDataBase = require("../../../database");
 const SnippetJavaScript = require("../../../database/models/SnippetJavaScript");
+const User = require("../../../database/models/User");
 const app = require("../../index");
 
 let mongoServer;
+let token;
+let idSnippetCreated;
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
@@ -15,11 +18,35 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
-  await SnippetJavaScript.create({
+  SnippetJavaScript.create({
     language: "JavaScript",
-    textCode: `i am a big piece of code`,
-    title: "start an express server",
+    textCode: "hi hi i am a program",
+    title: "amazingsoftware",
   });
+  const { body: snippetBoddy } = await request(app).get("/javascript");
+  // eslint-disable-next-line no-underscore-dangle
+  idSnippetCreated = snippetBoddy._id;
+  User.create({
+    name: "emiliano",
+    lastname: "polanco",
+    username: "emilio",
+    email: "emilianopolanco5@gmail.com",
+    password: "$2b$10$wu1A2PgtaMPps7h01duPeeJN3wicJ.PjOhzwdWqFagwAn3MhxW9oq",
+    snippetsJavaScript: [idSnippetCreated],
+  });
+
+  const rightCredentials = {
+    username: "emilio",
+    password: "pass123",
+  };
+  const { body } = await request(app)
+    .post("/users/login")
+    .send(rightCredentials);
+  token = body.token;
+});
+
+afterEach(async () => {
+  await User.deleteMany({});
 });
 
 afterAll(async () => {
@@ -45,13 +72,30 @@ describe("Given a /javascript/create", () => {
         textCode: `const startServer = (app, port) =>\r\n  new Promise((resolve, reject) => {\r\n    const server = app.listen(port, () => {\r\n      debugs up in http://localhost:$");\r\n      resolve();\r\n    });\r\n\r\n    server.on("error", (error) => {\r\n      debug("Oh no the server couldnt start"`,
         title: "snippet express",
       };
-      const { body } = await await request(app)
+      const { body } = await request(app)
         .post("/javascript/create")
+        .set("Authorization", `Bearer ${token}`)
         .send(codesnippet)
         .expect(201);
 
-      expect(body.language).toBe("JavaScript");
-      expect(body.title).toBe("snippet express");
+      expect(body.snippetsJavaScript).toHaveLength(2);
+    });
+  });
+});
+
+describe("Given a /javascript/edit endpoint", () => {
+  describe("When it receives a patch petition with an edition object", () => {
+    test("Then it should reply with the userState", async () => {
+      const editionObject = {
+        snippetId: idSnippetCreated,
+        updatedProperty: { title: "i am a new title" },
+      };
+      const { body } = await request(app)
+        .patch("/javascript/edit")
+        .set("Authorization", `Bearer ${token}`)
+        .send(editionObject);
+
+      expect(body.title).toBe(editionObject.updatedProperty.title);
     });
   });
 });
