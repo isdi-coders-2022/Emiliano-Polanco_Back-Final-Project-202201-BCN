@@ -9,14 +9,20 @@ const {
 } = require("../../controllers/snippets/snippetsControllers");
 const joiSnippet = require("../../middlewares/joySchemas/joySnippetSchema");
 const snippetLanguageValidator = require("../../middlewares/snippetLanguageValidator");
+const { tokenValidator } = require("../../middlewares/tokenValidator");
 
 typeScriptRouter.get("", loadRandomSnippetController(SnippetTypeScript));
 typeScriptRouter.post(
   "/create",
+  tokenValidator,
   validate(joiSnippet),
   snippetLanguageValidator("TypeScript"),
   createSnippetController(SnippetTypeScript)
 );
-typeScriptRouter.patch("/edit", editSnippetController(SnippetTypeScript));
+typeScriptRouter.patch(
+  "/edit",
+  tokenValidator,
+  editSnippetController(SnippetTypeScript)
+);
 
 module.exports = typeScriptRouter;
