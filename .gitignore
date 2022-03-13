@@ -3,5 +3,4 @@ scanner
 node_modules
 coverage
 .scannerwork
-.ideas
-
+.idea
