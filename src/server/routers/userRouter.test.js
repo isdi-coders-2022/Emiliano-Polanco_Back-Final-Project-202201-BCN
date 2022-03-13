@@ -8,6 +8,7 @@ const SnippetJavaScript = require("../../database/models/SnippetJavaScript");
 
 let mongoServer;
 let token;
+let idSnippetCreated;
 
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
@@ -23,7 +24,7 @@ beforeEach(async () => {
   });
   const { body: snippetBoddy } = await request(app).get("/javascript");
   // eslint-disable-next-line no-underscore-dangle
-  const idSnippetCreated = snippetBoddy._id;
+  idSnippetCreated = snippetBoddy._id;
   User.create({
     name: "emiliano",
     lastname: "polanco",
@@ -54,11 +55,21 @@ afterAll(async () => {
 
 describe("Given and /user/snippets endpoint", () => {
   describe("When it gets a request with the right credentials", () => {
-    test("Then it should reply with a the user snippet collection", async () => {
+    test("Then it should reply with a the user jsCollection", async () => {
+      const jsCollection = [
+        {
+          language: "JavaScript",
+          textCode: "hi hi i am a program",
+          title: "amazingsoftware",
+          __v: 0,
+          _id: idSnippetCreated,
+        },
+      ];
+
       const { body } = await request(app)
-        .get("/user/snippets")
+        .get("/user")
         .set("Authorization", `Bearer ${token}`);
-      expect(body).toHaveLength(1);
+      expect(body.snippetsJavaScript).toEqual(jsCollection);
     });
   });
 });
