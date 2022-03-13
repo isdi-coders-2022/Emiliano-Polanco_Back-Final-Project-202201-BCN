@@ -131,34 +131,66 @@ And the api will reply with Your UserState without the snippet in your javascrip
 
 ## The user and his profile
 
-### `user/snippets`
+### `user`
 
 TOKEN REQUIRED METHOD GET
 
-This is an easy one you just need your token and boom you get your personal snippets, simple right?
+This is an easy one you just need your token and boom you get your personal data, simple right?
 
 ```
-[
-    {
-        "_id": "62273e455e1654cd7ad00941",
-        "language": "JavaScript",
-        "textCode": "const startServer = (app, port) =>\r\n  new Promise((resolve, reject) => {\r\n    const server = app.listen(port, () => {\r\n      debug(`The server it's up in http://localhost:${port}`);\r\n      resolve();\r\n    });\r\n\r\n    server.on(\"error\", (error) => {\r\n      debug(`Oh no the server couldnt start ${error.message}`);\r\n      reject();\r\n    });\r\n  });\r\n\r\nmodule.exports = startServer;",
-        "title": "start an express server",
-        "__v": 0
-    },
-    {
-        "_id": "62273ed65e1654cd7ad00943",
-        "language": "JavaScript",
-        "textCode": "require(\"dotenv\").config();\r\nconst cors = require(\"cors\");\r\nconst express = require(\"express\");\r\nconst morgan = require(\"morgan\");\r\nconst { notFoundError, internalServerError } = require(\"./middlewares/errors\");\r\nconst loginRouter = require(\"./routers/loginRouter\");\r\nconst robotsRouter = require(\"./routers/robotsRouter\");\r\n\r\nconst app = express();\r\n\r\napp.use(cors());\r\napp.use(morgan(\"dev\"));\r\napp.use(express.json());\r\napp.use(\"/robots\", robotsRouter);\r\napp.use(\"/login\", loginRouter);",
-        "title": "normal chain of middlewares",
-        "__v": 0
-    },
-    {
-        "_id": "6228b158611c53bc237d8c09",
-        "language": "TypeScript",
-        "textCode": "function padLeft(padding: number | string, input: string) {\r\n  if (typeof padding === \"number\") {\r\n    return \" \".repeat(padding) + input;\r\n  }\r\n  return padding + input;\r\n}",
-        "title": "basics of typeScript",
-        "__v": 0
-    }
-]
+{
+    "_id": "6228a2052cc76662b3b8c990",
+    "name": "GergeMapMaster",
+    "lastname": "polanco",
+    "username": "george",
+    "email": "george5@gmail.com",
+    "password": "$2b$10$FU9E4RIxp3wt6sZgvagRUOGCGeshcYbzwgORLav4gQt3Ahklp.Qpu",
+    "pet": "basic",
+    "membership": "basic",
+    "scoreHistoryWpm": [],
+    "snippetsJavaScript": [
+        {
+            "_id": "62273e455e1654cd7ad00941",
+            "language": "JavaScript",
+            "textCode": "const startServer = (app, port) =>\r\n  new Promise((resolve, reject) => {\r\n    const server = app.listen(port, () => {\r\n      debug(`The server it's up in http://localhost:${port}`);\r\n      resolve();\r\n    });\r\n\r\n    server.on(\"error\", (error) => {\r\n      debug(`Oh no the server couldnt start ${error.message}`);\r\n      reject();\r\n    });\r\n  });\r\n\r\nmodule.exports = startServer;",
+            "title": "start an express server",
+            "__v": 0
+        },
+        {
+            "_id": "622c9d4da39bdb58b4af72e1",
+            "language": "JavaScript",
+            "textCode": "const hacerCommitsPequeños = true; \n\nif (hacerCommitsPequeños) {\n   console.log(\"Ole is happy\"); \n}\nif(This works){\nconsole.log(tengo un crud completo)\n}\n console.log(bug-fixed)",
+            "title": "OMG IT WORKS!!!",
+            "__v": 0
+        },
+        {
+            "_id": "622cbcb6dc934c9774ff2826",
+            "language": "JavaScript",
+            "textCode": "dgssgd this is smooth like butter",
+            "title": "smooth li butter that how this app is",
+            "__v": 0
+        },
+        {
+            "_id": "622d27da1c00e83c57a644a4",
+            "language": "JavaScript",
+            "textCode": "nbbn",
+            "title": "hbnbv",
+            "__v": 0
+        }
+    ],
+    "snippetsPhyton": [],
+    "snippetsCsharp": [],
+    "scoreHistoryAccuracy": [],
+    "scoreHistoryPerCharacter": [],
+    "__v": 0,
+    "snippetsTypeScript": [
+        {
+            "_id": "6228b158611c53bc237d8c09",
+            "language": "TypeScript",
+            "textCode": "function padLeft(padding: number | string, input: string) {\r\n  if (typeof padding === \"number\") {\r\n    return \" \".repeat(padding) + input;\r\n  }\r\n  return padding + input;\r\n}",
+            "title": "basics of typeScript",
+            "__v": 0
+        }
+    ]
+}
 ```
