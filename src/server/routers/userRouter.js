@@ -4,6 +4,6 @@ const {
 } = require("../controllers/user/collectionsControllers");
 const { tokenValidator } = require("../middlewares/tokenValidator");
 
-userRouter.get("/snippets", tokenValidator, collectionUserSnippetsController);
+userRouter.get("", tokenValidator, collectionUserSnippetsController);
 
 module.exports = userRouter;

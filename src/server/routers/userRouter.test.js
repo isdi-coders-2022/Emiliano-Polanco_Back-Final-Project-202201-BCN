@@ -67,7 +67,7 @@ describe("Given and /user/snippets endpoint", () => {
       ];
 
       const { body } = await request(app)
-        .get("/user/snippets")
+        .get("/user")
         .set("Authorization", `Bearer ${token}`);
       expect(body.snippetsJavaScript).toEqual(jsCollection);
     });
