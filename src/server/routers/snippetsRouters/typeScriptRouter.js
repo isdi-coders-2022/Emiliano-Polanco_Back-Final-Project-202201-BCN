@@ -13,6 +13,10 @@ const snippetLanguageValidator = require("../../middlewares/snippetLanguageValid
 const { tokenValidator } = require("../../middlewares/tokenValidator");
 
 typeScriptRouter.get("", loadRandomSnippetController(SnippetTypeScript));
+typeScriptRouter.get(
+  "/snippet",
+  loadRandomSnippetController(SnippetTypeScript)
+);
 typeScriptRouter.post(
   "/create",
   tokenValidator,
