@@ -102,9 +102,22 @@ const deleteSnippetFromUserCollection =
     }
   };
 
+const getSnippetController =
+  (programingLanguageModel) => async (req, res, next) => {
+    try {
+      const { id: snippetId } = req.query;
+      const snippet = await programingLanguageModel.findById(snippetId);
+      res.status(200).json(snippet);
+    } catch (error) {
+      error.status = 404;
+      next(error);
+    }
+  };
+
 module.exports = {
   loadRandomSnippetController,
   createSnippetController,
   editSnippetController,
   deleteSnippetFromUserCollection,
+  getSnippetController,
 };
