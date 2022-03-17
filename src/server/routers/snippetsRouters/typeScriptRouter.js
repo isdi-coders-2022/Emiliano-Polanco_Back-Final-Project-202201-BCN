@@ -7,16 +7,14 @@ const {
   createSnippetController,
   editSnippetController,
   deleteSnippetFromUserCollection,
+  getSnippetController,
 } = require("../../controllers/snippets/snippetsControllers");
 const joiSnippet = require("../../middlewares/joySchemas/joySnippetSchema");
 const snippetLanguageValidator = require("../../middlewares/snippetLanguageValidator");
 const { tokenValidator } = require("../../middlewares/tokenValidator");
 
 typeScriptRouter.get("", loadRandomSnippetController(SnippetTypeScript));
-typeScriptRouter.get(
-  "/snippet",
-  loadRandomSnippetController(SnippetTypeScript)
-);
+typeScriptRouter.get("/snippet", getSnippetController(SnippetTypeScript));
 typeScriptRouter.post(
   "/create",
   tokenValidator,
