@@ -82,7 +82,7 @@ const loginRegisterGoogleController = async (req, res, next) => {
         };
 
         const tokenJWT = await jwt.sign(payloadUser, secret);
-        res.json({ token: tokenJWT });
+        res.json({ tokenJWT });
       }
     } catch (error) {
       error.status = 401;
