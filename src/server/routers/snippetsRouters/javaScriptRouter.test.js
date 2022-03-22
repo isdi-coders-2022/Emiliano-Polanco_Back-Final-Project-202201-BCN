@@ -115,3 +115,21 @@ describe("Given a /javascript/delete endpoint", () => {
     });
   });
 });
+
+describe("Given a /javascript/delete endpoint", () => {
+  describe("When it receives a delete petition with a token and an id", () => {
+    test("Then it should return the newUserState", async () => {
+      const deleteObject = {
+        snippetId: "",
+      };
+      const { body } = await request(app)
+        .delete("/javascript/delete")
+        .set("Authorization", `Bearer ${token}`)
+        .send(deleteObject);
+
+      expect(body.message).toBe(
+        'Cast to ObjectId failed for value "" (type string) at path "snippetsJavaScript"'
+      );
+    });
+  });
+});
