@@ -19,7 +19,7 @@ describe("Given a notFoundError middleware", () => {
 });
 
 describe("Given a internalServerError middleware", () => {
-  describe("When it receiber an error and a res", () => {
+  describe("When it receives an error and a res", () => {
     test("Then it should call the status and json methods", () => {
       const err = {
         message: "Oh no there is fire in the hole",
@@ -36,6 +36,25 @@ describe("Given a internalServerError middleware", () => {
       internalServerError(err, "", res);
 
       expect(res.status).toHaveBeenCalledWith(expectedStatus);
+      expect(res.json).toHaveBeenCalledWith(expectedError);
+    });
+  });
+
+  describe("When it receives an error and a res", () => {
+    test("Then it should call the status and json methods", () => {
+      const err = {
+        status: null,
+      };
+      const res = {
+        status: jest.fn().mockImplementation(() => res),
+        json: jest.fn(),
+      };
+
+      const expectedErrorMessage = "General pete";
+      const expectedError = { error: true, message: expectedErrorMessage };
+
+      internalServerError(err, "", res);
+
       expect(res.json).toHaveBeenCalledWith(expectedError);
     });
   });

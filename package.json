@@ -27,7 +27,8 @@
       "src/**/*.js",
       "!src/**/*.test.js",
       "!src/index.js",
-      "!src/server/startServer.js"
+      "!src/server/startServer.js",
+      "!src/database/index.js"
     ]
   },
   "dependencies": {
